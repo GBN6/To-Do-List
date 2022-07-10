@@ -12,14 +12,19 @@
     <link rel="stylesheet" href="css/regular.min.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header">        
+        <div class="header-positioning">
+            <button class="btn-nav-open">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
         <div class="logo">
             <i class="fas fa-check-double"></i>
             <h1 class="page-name">Todo List</h1>
         </div>
-        <button class="btn-nav-open">
-            <i class="fas fa-bars"></i>
-        </button>
+        <div class="header-positioning">
+        </div>
+
     </header>
 
     <main class="main" id="main">
@@ -42,7 +47,7 @@
             <div class="projects-user">
 
             </div>
-            <button class="btn-project-user-add">
+            <button class="btn-project-user" id="btn-project-user-add">
                 <i class="fa-solid fa-plus"></i>
                 ' Create new project '
             </button>
@@ -54,7 +59,6 @@
     <footer>
         <p>GBN6@2022</p>
     </footer>
-    
     <script src="main.js"></script>
 </body>
 </html>
