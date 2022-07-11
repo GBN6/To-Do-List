@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n\n\n\n\nlet test = new _task__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Try This\", \"Attempt to make a todo\", new Date().toDateString(), \"High\", true);\n\nconsole.log(test);\ntest.toggleCompleted();\nconsole.log(test);\n\n\n\n//# sourceURL=webpack://to-do-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n\n\n\n\nlet test = new _task__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Try This\", \"Attempt to make a todo\", new Date().toDateString(), \"High\", true);\n\nlet test2 = new _project__WEBPACK_IMPORTED_MODULE_1__[\"default\"]('New Project');\n\ntest2.addTask(\"Try This\", \"Attempt to make a todo\", new Date().toDateString(), \"High\", true);\nconsole.log(test2);\n\n\n\n\n//# sourceURL=webpack://to-do-list/./src/index.js?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tas
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n\n\nclass Project {\n    constructor(title){\n        this.title = title;\n        this.tasksList = [];\n    }\n\n\n    addTask(title, info, dueDate, priority) { \n        this.tasksList.push(new _task__WEBPACK_IMPORTED_MODULE_0__[\"default\"](title, info, dueDate, priority));\n    }\n}\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Project);\n\n//# sourceURL=webpack://to-do-list/./src/project.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n\n\nclass Project {\n    constructor(title){\n        this.title = title;\n        this.tasksList = [];\n    }\n\n    addTask(title, info, dueDate, priority) { \n        this.tasksList.push(new _task__WEBPACK_IMPORTED_MODULE_0__[\"default\"](title, info, dueDate, priority));\n    }\n}\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Project);\n\n//# sourceURL=webpack://to-do-list/./src/project.js?");
 
 /***/ }),
 
