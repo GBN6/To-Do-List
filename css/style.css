@@ -77,7 +77,36 @@ body {
     font-size: 1.2rem;
     text-align: left;
   }
-
+/*    ADD PROJECT INPUT      */
+.add-project-popup{
+    display: none;
+}
+.input-add-project-popup {
+    border: 3px solid var(--color-grey);
+    background-color: var(--color-white);
+    border-radius: 2px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    outline: none;
+}
+.add-project-popup-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.btn-add-project-popup, .btn-close-poject-popup {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-weight: 900;
+}
+.btn-add-project-popup {
+    background-color: #9fee9f;
+}
+.btn-close-poject-popup {
+    background-color: #f57c7c;
+}
 
   /*      FOOTER         */
   
