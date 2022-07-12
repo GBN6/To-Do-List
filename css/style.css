@@ -66,7 +66,7 @@ body {
     background-color: var(--color-dark);
 }
 
-.main .btn-project-default, .btn-project-user{
+.main .btn-project-default, .btn-project-user, .btn-add-task{
     width: 100%;
     padding: 10px 20px;
     border-radius: 5px;
@@ -80,6 +80,42 @@ body {
 /*    ADD PROJECT INPUT      */
 .add-project-popup{
     display: none;
+}
+
+.add-project-popup.active {
+    display: block;
+}
+
+.btn-project-user.active {
+    display: none;
+}
+.projects-user {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-project{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: inherit;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--color-white);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+.btn-project-default:hover, .btn-project:hover {
+    background-color: var(--color-grey);
+}
+.btn-choose-project.active {
+    background-color: var(--color-grey);
+}
+
+.btn-project span {
+    margin-left: 10px;
+    margin-right: auto;
 }
 .input-add-project-popup {
     border: 3px solid var(--color-grey);
@@ -108,7 +144,33 @@ body {
     background-color: #f57c7c;
 }
 
-  /*      FOOTER         */
+.btn-project-delete {
+    background-color: inherit;
+    color: var(--color-red);
+    border: none;
+    font-size: 1.7rem;
+}
+
+.title-error {
+    color: var(--color-red);
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/*      TASKS           */
+.task-projects-preview {
+    width: 900px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+.task-projects-preview h1 {
+    background-color: var(--color-yellow);
+    padding: 20px;
+    color: var(--color-dark);
+}
+
+/*      FOOTER         */
   
 footer {
     position: absolute;
