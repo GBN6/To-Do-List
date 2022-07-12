@@ -105,6 +105,7 @@ body {
     color: var(--color-white);
     font-size: 1.1rem;
     margin-bottom: 5px;
+    cursor: pointer;
 }
 .btn-project-default:hover, .btn-project:hover {
     background-color: var(--color-grey);
@@ -136,6 +137,7 @@ body {
     border-radius: 5px;
     padding: 10px 30px;
     font-weight: 900;
+    cursor: pointer;
 }
 .btn-add-project-popup {
     background-color: #9fee9f;
