@@ -31,15 +31,15 @@
         <nav class="nav" id="nav">
             <h1>Home</h1>
             <div class="projects-default">
-                <button class="btn-project-default" id="btn-projects-home">
+                <button class="btn-project-default btn-choose-project" id="btn-projects-home">
                     <i class="fa-solid fa-house-user"></i>
-                    All Tasks  
+                    Your Tasks  
                 </button>
-                <button class="btn-project-default" id="btn-projects-today">
+                <button class="btn-project-default btn-choose-project" id="btn-projects-today">
                     <i class="fa-solid fa-calendar-day"></i>
                     Today 
                 </button>
-                <button class="btn-project-default" id="btn-projects-week">
+                <button class="btn-project-default btn-choose-project" id="btn-projects-week">
                     <i class="fa-solid fa-calendar-week"></i>
                     Week 
                 </button>
@@ -62,10 +62,19 @@
                         Cancel
                     </button>
                 </div>
+                <p class="title-error"></p>
 
             </div>
         </nav>
-        <div class="tak-projects-preview">
+        <div class="task-projects-preview">
+            <h1>Your Tasks</h1>
+            <div class="task-list">
+
+            </div>
+            <button class="btn-add-task">
+                <i class="fas fa-plus"></i>
+                Add Task
+            </button>
             
         </div>
     </main>
