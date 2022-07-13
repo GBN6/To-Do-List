@@ -78,6 +78,8 @@ const UI = (() => {
     }
 
     function setActiveProject() {
+        let counter = 0;
+        console.log(counter);
         const activeProject = document.querySelectorAll('.btn-choose-project')
         activeProject.forEach((element) => element.addEventListener('click', handleProjects)
     )}
@@ -111,6 +113,7 @@ const UI = (() => {
         clearTaskContainer()
 
         tasksList.classList.add('task-list');
+        projectName.classList.add('current-project');
         addTaskButton.classList.add('btn-add-task');
         addTaskButtonIcon.classList.add('fas', 'fa-plus');
         addTaskText.textContent = 'Add Task';
@@ -130,7 +133,6 @@ const UI = (() => {
             tasksContainer.appendChild(projectName);
             tasksContainer.appendChild(tasksList);
             tasksContainer.appendChild(addTaskButton);
-            openAddTaskForm()
         }
         return tasksContainer;
     }
@@ -172,19 +174,48 @@ const UI = (() => {
     }
 
 
-    function openAddTaskForm() {
-        const openForm = document.querySelector('.btn-add-task');
-        const form = document.querySelector('.add-task-form');
-        openForm.addEventListener('click', (e) => {
-            openForm.classList.add('active');
-            form.classList.add('active');
-        })
-    }
+    // function openAddTaskForm() {
+    //     const openForm = document.querySelector('.btn-add-task');
+    //     const formContainer = document.querySelector('.add-task-form');
+    //     openForm.addEventListener('click', () => {
+    //         openForm.classList.add('active');
+    //         formContainer.classList.add('active');
+    //     })
+    //     form.addEventListener('submit', (e) => {
+    //         e.preventDefault();
+    //         const projectName = document.querySelector('.current-project').textContent;
+    //         const taskTitle = document.querySelector('#input-task-title').value;
+    //         const taskInfo = document.querySelector('#input-task-info').value;
+    //         const taskDate = document.querySelector('#input-task-date').value;
+    //         const taskPriority = document.querySelector('.input-task-priority').value;
+    //         let i = projectList.index(projectName);
+    //         console.log(i);
+    //         getCurrentProject[0].addTask(taskTitle, taskInfo, taskDate, taskPriority);
+    //         e.reset();
+    //         hideAddTaskForm();
+    //         console.log({taskTitle, taskInfo, taskDate, taskPriority});
+    //     });
+    // }
+    // openAddTaskForm();
 
     function hideAddTaskForm() {
-        const form = document.querySelector('.add-task-form');
-        form.classList.remove('active');
+        const formContainer = document.querySelector('.add-task-form');
+        formContainer.classList.remove('active');
     }
+
+    // function submitTaskForm(e) {
+    //     e.preventdefault();
+    //     const projectName = document.querySelector('.current-project').textContent;
+    //     const taskTitle = document.querySelector('.input-task-title').value;
+    //     const taskInfo = document.querySelector('.input-task-info').value;
+    //     const taskDate = document.querySelector('.input-task-date').value;
+    //     const taskPriority = document.querySelector('.input-task-priority').value;
+    //     let getCurrentProject = projectList.filter((project) => project.getTitle() === projectName);
+    //     e.reset();
+    //     getCurrentProject.addTask(taskTitle, taskInfo, taskDate, taskPriority);
+    //     hideAddTaskForm();
+    //     console.log(getCurrentProject);
+    // }
 
 })();
 
@@ -238,6 +269,16 @@ projectList.deleteProject = (position) => {
 
 projectList.contains = (projectName) => {
     return projectList.some((project) => project.title === projectName)
+}
+
+projectList.index = (projectName) => {
+    for (i = 0; i < projectList.length; i++)
+    {
+        if (projectName === projectList[i].getTitle())
+        {
+            return i;
+        }
+    }
 }
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
