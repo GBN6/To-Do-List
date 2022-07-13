@@ -41,7 +41,7 @@
                 </button>
                 <button class="btn-project-default btn-choose-project" id="btn-projects-week">
                     <i class="fa-solid fa-calendar-week"></i>
-                    Week 
+                    This week 
                 </button>
             </div>
             <h1>Your Projects</h1>
@@ -66,17 +66,34 @@
 
             </div>
         </nav>
-        <div class="task-projects-preview">
-            <h1>Your Tasks</h1>
-            <div class="task-list">
+        <div class="tasks-container">
+            <div class="task-projects-preview">
 
             </div>
-            <button class="btn-add-task">
-                <i class="fas fa-plus"></i>
-                Add Task
-            </button>
-            
+            <div class="add-task-form">
+                <form action="" id="add-task" class="add-task" autocomplete="off">
+                    <div class="input-task">
+                        <label for="input-task-title">Title:</label>
+                        <input type="text" id="input-task-title" placeholder="Enter task title" required>
+                        <label for="input-task-info">Description:</label>
+                        <textarea type="text" id="input-task-info" placeholder="Enter task description" wrap="hard"></textarea>
+                        <label for="input-task-date">Date:</label>
+                        <input type="date" id="input-task-date" required>
+                        <div class="input-task-buttons">
+                            <select name="priority" class="input-task-priority" id="">
+                                <option value="none">Select priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                            <button type="submit" class="input-task-submit-btn">Add</button>
+                            <button class="input-task-cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
+        
     </main>
     <footer>
         <p>GBN6@2022</p>
