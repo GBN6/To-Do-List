@@ -68,6 +68,9 @@
         </nav>
         <div class="tasks-container">
             <div class="task-projects-preview">
+                <div class="task-list">
+
+                </div>
 
             </div>
             <div class="add-task-form">
@@ -75,13 +78,14 @@
                     <div class="input-task">
                         <label for="input-task-titleL">Title:</label>
                         <input type="text" id="input-task-title" placeholder="Enter task title" required>
+                        <p class="task-name-error"></p>
                         <label for="input-task-infoL">Description:</label>
                         <textarea type="text" id="input-task-info" placeholder="Enter task description" wrap="hard"></textarea>
                         <label for="input-task-dateL">Date:</label>
                         <input type="date" id="input-task-date" required>
                         <div class="input-task-buttons">
-                            <select name="priority" class="input-task-priority" id="">
-                                <option value="none">Select priority</option>
+                            <select name="priority" class="input-task-priority" id="" required>
+                                <option value="">Select priority</option>
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
                                 <option value="high">High</option>
