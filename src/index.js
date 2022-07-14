@@ -2,29 +2,31 @@
 const UI = (() => {
     setActiveProject();
     const createNewProjectButton = document.querySelector('.btn-project-user');
-
+    const addNewTask = document.querySelector('.add-task');
     createNewProjectButton.addEventListener('click', displayProjectInput);
+    addNewTask.addEventListener('submit', addNewTaskToList);
+    
 
     function displayProjectInput() {
         const newProjectPopup = document.querySelector('.add-project-popup');
         const addNewProject = document.querySelector('.btn-add-project-popup');
+        const closeProject = document.querySelector('.btn-close-poject-popup');
 
         addNewProject.addEventListener('click', addProject)
         newProjectPopup.classList.add('active');
         createNewProjectButton.classList.add('active');
-    }
-
-    function closeProjectInput() {
-        const newProjectPopup = document.querySelector('.add-project-popup');
-        const closeProject = document.querySelector('.btn-close-poject-popup');
-
-        createNewProjectButton.classList.remove('active');
-        newProjectPopup.classList.remove('active');
 
         closeProject.addEventListener('click', () => {
             createNewProjectButton.classList.remove('active');
             newProjectPopup.classList.remove('active')
         })
+    }
+
+    function closeProjectInput() {
+        const newProjectPopup = document.querySelector('.add-project-popup');
+
+        createNewProjectButton.classList.remove('active');
+        newProjectPopup.classList.remove('active');
     }
 
     function addProject() {
@@ -78,8 +80,6 @@ const UI = (() => {
     }
 
     function setActiveProject() {
-        let counter = 0;
-        console.log(counter);
         const activeProject = document.querySelectorAll('.btn-choose-project')
         activeProject.forEach((element) => element.addEventListener('click', handleProjects)
     )}
@@ -93,6 +93,7 @@ const UI = (() => {
             return; 
         }
         openProject(projectTitle, this);
+        renderTasksList(projectTitle);
     }
 
     function openProject(projectTitle, projectButton) {
@@ -133,6 +134,7 @@ const UI = (() => {
             tasksContainer.appendChild(projectName);
             tasksContainer.appendChild(tasksList);
             tasksContainer.appendChild(addTaskButton);
+            openAddTaskForm();
         }
         return tasksContainer;
     }
@@ -174,33 +176,96 @@ const UI = (() => {
     }
 
 
-    // function openAddTaskForm() {
-    //     const openForm = document.querySelector('.btn-add-task');
-    //     const formContainer = document.querySelector('.add-task-form');
-    //     openForm.addEventListener('click', () => {
-    //         openForm.classList.add('active');
-    //         formContainer.classList.add('active');
-    //     })
-    //     form.addEventListener('submit', (e) => {
-    //         e.preventDefault();
-    //         const projectName = document.querySelector('.current-project').textContent;
-    //         const taskTitle = document.querySelector('#input-task-title').value;
-    //         const taskInfo = document.querySelector('#input-task-info').value;
-    //         const taskDate = document.querySelector('#input-task-date').value;
-    //         const taskPriority = document.querySelector('.input-task-priority').value;
-    //         let i = projectList.index(projectName);
-    //         console.log(i);
-    //         getCurrentProject[0].addTask(taskTitle, taskInfo, taskDate, taskPriority);
-    //         e.reset();
-    //         hideAddTaskForm();
-    //         console.log({taskTitle, taskInfo, taskDate, taskPriority});
-    //     });
-    // }
-    // openAddTaskForm();
+    function openAddTaskForm() {
+        const openForm = document.querySelector('.btn-add-task');
+        const formContainer = document.querySelector('.add-task-form');
+        openForm.addEventListener('click', () => {
+            openForm.classList.add('active');
+            formContainer.classList.add('active');
+        })
+
+    }
+
+    function closeAddTaskForm() {
+        const openForm = document.querySelector('.btn-add-task');
+        const formContainer = document.querySelector('.add-task-form');
+        openForm.classList.remove('active');
+        formContainer.classList.remove('active');
+    }
+
+    function addNewTaskToList(e) {
+        e.preventDefault();
+        const projectName = document.querySelector('.current-project').textContent;
+        const taskTitle = document.querySelector('#input-task-title').value;
+        const taskInfo = document.querySelector('#input-task-info').value;
+        const taskDate = document.querySelector('#input-task-date').value;
+        const taskPriority = document.querySelector('.input-task-priority').value;
+        const taskTitleErorr = document.querySelector('.task-name-error')
+        let i = projectList.index(projectName);
+        if(projectList[i].contains(taskTitle))
+        {
+            taskTitleErorr.textContent = 'Tasks must have different names';
+            return;
+        }
+
+        taskTitleErorr.textContent = '';
+        projectList[i].addTask(taskTitle, taskInfo, taskDate, taskPriority);
+        e.target.reset();
+        hideAddTaskForm();
+        renderTasksList(projectName);
+        closeAddTaskForm()
+        console.log(projectList);
+        }        
 
     function hideAddTaskForm() {
         const formContainer = document.querySelector('.add-task-form');
         formContainer.classList.remove('active');
+    }
+
+    function renderTasksList(projectName) {
+        let ind = projectList.index(projectName);
+        const tasksContainer = document.querySelector('.task-list');
+        tasksContainer.innerHTML = '';
+        projectList[ind].tasksList.forEach((task) => {
+            const taskDiv = document.createElement('div');
+            const checkedButton = document.createElement('button');
+            const taskName = document.createElement('div');
+            const taskInfoButton = document.createElement('button');
+            const taskDate = document.createElement('div')
+            const editTask = document.createElement('button');
+            const editTaskIcon = document.createElement('i');
+            const deleteTask = document.createElement('button');
+            const deleteTaskIcon = document.createElement('i');
+
+            taskDiv.classList.add('task');
+            taskDiv.setAttribute('data-project', `${projectName}`)
+            checkedButton.classList.add('btn-task-checked');
+            taskName.classList.add('task-name');
+            taskInfoButton.classList.add('btn-task-info');
+            taskDate.classList.add('task-date');
+            editTask.classList.add('btn-task-edit');
+            editTaskIcon.classList.add('fas', 'fa-pen-to-square')
+            deleteTask.classList.add('btn-task-delete');
+            deleteTaskIcon.classList.add('fas', 'fa-trash-can');
+
+            taskName.textContent = `${task.title}`
+            taskInfoButton.textContent = 'Details'
+            taskDate.textContent = `${task.dueDate}`;
+
+
+            deleteTask.appendChild(deleteTaskIcon);
+            editTask.appendChild(editTaskIcon);
+            taskDiv.appendChild(checkedButton);
+            taskDiv.appendChild(taskName);
+            taskDiv.appendChild(taskInfoButton);
+            taskDiv.appendChild(taskDate);
+            taskDiv.appendChild(editTask);
+            taskDiv.appendChild(deleteTask);
+            tasksContainer.appendChild(taskDiv);
+
+            return tasksContainer;
+
+        });
     }
 
     // function submitTaskForm(e) {
@@ -234,6 +299,9 @@ class Project {
 
     getTitle() {
         return this.title;
+    }
+    contains(taskName) {
+        return this.tasksList.some((task) => task.title === taskName)
     }
 
 }
