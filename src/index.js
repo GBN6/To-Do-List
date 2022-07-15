@@ -255,6 +255,7 @@ const UI = (() => {
             taskInfoButton.textContent = 'Details'
             taskDate.textContent = `${task.dueDate}`;
             priorityCheck(taskDiv, task.priority);
+            toggleDoneTask(checkedButton, task, task.completed, taskDiv);
 
 
             deleteTask.appendChild(deleteTaskIcon);
@@ -267,7 +268,17 @@ const UI = (() => {
             taskDiv.appendChild(deleteTask);
             tasksContainer.appendChild(taskDiv);
 
-            checkedButton.addEventListener('click', (e) => toggleDoneTask(e, task, task.completed, taskDiv));
+            checkedButton.addEventListener('click', () => {
+                task.toggleCompleted();
+                console.log(projectList);
+                renderTasksList(projectName);
+            });
+            deleteTask.addEventListener('click', (e) => {
+                let taskDlt = document.querySelector(`div[data-index="${i}"]`)
+                tasksContainer.removeChild(taskDlt);
+                projectList[ind].deleteTask(i);
+                console.log(projectList);
+            })
 
             return tasksContainer;
 
@@ -289,20 +300,19 @@ const UI = (() => {
             return container;
         }
         
-        function toggleDoneTask(e, task, value, container) {
+        function toggleDoneTask(button, task, value, container) {
             const completedIcon = document.createElement('i');
             completedIcon.classList.add('fas', 'fa-check')
-            if (value === false)
+            if (value === true)
             {
-                task.toggleCompleted();
                 container.classList.add('completed');
-                e.target.appendChild(completedIcon);
+                button.appendChild(completedIcon);
+                console.log(button);
             }
             else 
             {
-                task.toggleCompleted();
                 container.classList.remove('completed');
-                e.target.removeChild(completedIcon);
+                button.innerHTML = '';
             }
             return container;
         }
@@ -343,6 +353,9 @@ class Project {
     contains(taskName) {
         return this.tasksList.some((task) => task.title === taskName)
     }
+    deleteTask(index) {
+        this.tasksList.splice(index, 1);
+    };
 
 }
 
@@ -392,6 +405,8 @@ projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
 projectList[0].addTask('Task', 'DETAILS', '15.07.2022', 'low');
+projectList[0].addTask('Task2', 'DETAILS', '15.07.2022', 'high');
+projectList[0].addTask('Task3', 'DETAILS', '15.07.2022', 'medium');
 console.log(projectList);
 
 const test = new Project('New Project');
