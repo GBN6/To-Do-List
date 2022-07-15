@@ -188,7 +188,8 @@ body {
 }
 
 .task {
-    background-color: inherit;
+    background-color: var(--color-dark);
+    color: var(--color-white);
     display: flex;
     align-items: center;
     border: 2px solid var(--color-dark);
@@ -206,11 +207,21 @@ body {
     border-radius: 5px;
 }
 .task .btn-task-info {
-    border: 1px solid var(--color-yellow)
+    border: 2px solid var(--color-yellow)
 }
 
 .task .btn-task-delete {
     color: var(--color-red);
+}
+
+.task .btn-task-checked {
+    border: 3px solid var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 90px;
+    height: 1.5rem;
+    width: 1.5rem;
 }
 
 /*         TASKS FORM           */
@@ -264,6 +275,29 @@ body {
     margin: 0;
     color: var(--color-red);
 }
+
+
+
+.priority-low {
+    background-color: rgb(107, 199, 107);
+}
+.priority-medium {
+    background-color: rgb(245, 193, 97);
+}
+.priority-high {
+    background-color: rgb(255, 96, 96);
+}
+
+.task-low {
+    border-left: 5px solid rgb(107, 199, 107);
+}
+.task-medium {
+    border-left: 5px solid rgb(245, 193, 97);
+}
+.task-high {
+    border-left: 5px solid rgb(255, 96, 96);
+}
+
 
 /*      FOOTER         */
   

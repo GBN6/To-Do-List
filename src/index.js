@@ -1,4 +1,6 @@
+import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
 //     DOM
+
 const UI = (() => {
     setActiveProject();
     const createNewProjectButton = document.querySelector('.btn-project-user');
@@ -226,7 +228,7 @@ const UI = (() => {
         let ind = projectList.index(projectName);
         const tasksContainer = document.querySelector('.task-list');
         tasksContainer.innerHTML = '';
-        projectList[ind].tasksList.forEach((task) => {
+        projectList[ind].tasksList.forEach((task, i) => {
             const taskDiv = document.createElement('div');
             const checkedButton = document.createElement('button');
             const taskName = document.createElement('div');
@@ -239,6 +241,7 @@ const UI = (() => {
 
             taskDiv.classList.add('task');
             taskDiv.setAttribute('data-project', `${projectName}`)
+            taskDiv.setAttribute('data-index', `${i}`)
             checkedButton.classList.add('btn-task-checked');
             taskName.classList.add('task-name');
             taskInfoButton.classList.add('btn-task-info');
@@ -251,6 +254,7 @@ const UI = (() => {
             taskName.textContent = `${task.title}`
             taskInfoButton.textContent = 'Details'
             taskDate.textContent = `${task.dueDate}`;
+            priorityCheck(taskDiv, task.priority);
 
 
             deleteTask.appendChild(deleteTaskIcon);
@@ -263,9 +267,45 @@ const UI = (() => {
             taskDiv.appendChild(deleteTask);
             tasksContainer.appendChild(taskDiv);
 
+            checkedButton.addEventListener('click', (e) => toggleDoneTask(e, task, task.completed, taskDiv));
+
             return tasksContainer;
 
         });
+
+        function priorityCheck(container, value) {
+            if (value === 'low')
+            {
+                container.classList.add('task-low');
+            }
+            else if (value === 'medium')
+            {
+                container.classList.add('task-medium');
+            }
+            else if (value === 'high')
+            {
+                container.classList.add('task-high');
+            }
+            return container;
+        }
+        
+        function toggleDoneTask(e, task, value, container) {
+            const completedIcon = document.createElement('i');
+            completedIcon.classList.add('fas', 'fa-check')
+            if (value === false)
+            {
+                task.toggleCompleted();
+                container.classList.add('completed');
+                e.target.appendChild(completedIcon);
+            }
+            else 
+            {
+                task.toggleCompleted();
+                container.classList.remove('completed');
+                e.target.removeChild(completedIcon);
+            }
+            return container;
+        }
     }
 
     // function submitTaskForm(e) {
@@ -340,7 +380,7 @@ projectList.contains = (projectName) => {
 }
 
 projectList.index = (projectName) => {
-    for (i = 0; i < projectList.length; i++)
+    for (let i = 0; i < projectList.length; i++)
     {
         if (projectName === projectList[i].getTitle())
         {
@@ -351,6 +391,7 @@ projectList.index = (projectName) => {
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
+projectList[0].addTask('Task', 'DETAILS', '15.07.2022', 'low');
 console.log(projectList);
 
 const test = new Project('New Project');
