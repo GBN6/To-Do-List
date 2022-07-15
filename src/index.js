@@ -5,8 +5,10 @@ const UI = (() => {
     setActiveProject();
     const createNewProjectButton = document.querySelector('.btn-project-user');
     const addNewTask = document.querySelector('.add-task');
+    const cancelAddTaskForm = document.querySelector('.input-task-cancel-btn');
     createNewProjectButton.addEventListener('click', displayProjectInput);
     addNewTask.addEventListener('submit', addNewTaskToList);
+    cancelAddTaskForm.addEventListener('click', closeAddTaskForm)
     
 
     function displayProjectInput() {
@@ -253,7 +255,7 @@ const UI = (() => {
 
             taskName.textContent = `${task.title}`
             taskInfoButton.textContent = 'Details'
-            taskDate.textContent = `${task.dueDate}`;
+            taskDate.textContent = `${task.getDateFormatted()}`;
             priorityCheck(taskDiv, task.priority);
             toggleDoneTask(checkedButton, task, task.completed, taskDiv);
 
@@ -264,7 +266,7 @@ const UI = (() => {
             taskDiv.appendChild(taskName);
             taskDiv.appendChild(taskInfoButton);
             taskDiv.appendChild(taskDate);
-            taskDiv.appendChild(editTask);
+            // taskDiv.appendChild(editTask);
             taskDiv.appendChild(deleteTask);
             tasksContainer.appendChild(taskDiv);
 
@@ -356,6 +358,18 @@ class Project {
     deleteTask(index) {
         this.tasksList.splice(index, 1);
     };
+    getTasksToday() {
+        return this.tasksList.filter((task) => {
+          const taskDate = new Date(task.getDateFormatted())
+          return isToday(toDate(taskDate))
+        })
+      }
+    getTasksThisWeek() {
+        return this.tasksList.filter((task) => {
+        const taskDate = new Date(task.getDateFormatted())
+        return isThisWeek(subDays(toDate(taskDate), 1))
+        })
+    }
 
 }
 
@@ -375,6 +389,16 @@ class Tasks {
     editTask(key, value) {
         this[key] = value;
     }
+
+    getDateFormatted() {
+        const day = this.dueDate.split('-')[0]
+        const month = this.dueDate.split('-')[1]
+        const year = this.dueDate.split('-')[2]
+        return `${year}/${month}/${day}`;
+    }
+    getDate() {
+        return this.dueDate
+      }
 }
 
 
@@ -401,13 +425,29 @@ projectList.index = (projectName) => {
         }
     }
 }
+projectList.updateTodayProject = () => {
+    projectList[1].tasks = [];
+
+    projectList.forEach((project) => {
+      if (project.title === 'Today' || project.title === 'This week')
+        return;
+
+      const todayTasks = project.getTasksToday();
+      todayTasks.forEach((task) => {
+        const taskName = `${task.title} (${project.title})`
+        projectList[1].addTask(taskName, task.info, task.getDate(), task.priority);
+      })
+    })
+  }
+
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
-projectList[0].addTask('Task', 'DETAILS', '15.07.2022', 'low');
-projectList[0].addTask('Task2', 'DETAILS', '15.07.2022', 'high');
-projectList[0].addTask('Task3', 'DETAILS', '15.07.2022', 'medium');
+projectList[0].addTask('Task', 'DETAILS', '15-07-2022', 'low');
+projectList[0].addTask('Task2', 'DETAILS', '15-07-2022', 'high');
+projectList[0].addTask('Task3', 'DETAILS', '15-07-2022', 'medium');
 console.log(projectList);
+projectList.updateTodayProject();
 
 const test = new Project('New Project');
 
