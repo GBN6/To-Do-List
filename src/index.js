@@ -97,6 +97,7 @@ const UI = (() => {
             return; 
         }
         projectList.updateTodayProject();
+        projectList.updateWeekProject();
         openProject(projectTitle, this);
         renderTasksList(projectTitle);
     }
@@ -368,7 +369,7 @@ class Project {
     getTasksThisWeek() {
         return this.tasksList.filter((task) => {
         const taskDate = new Date(task.getDate())
-        return isThisWeek(subDays(toDate(taskDate), 1))
+        return isThisWeek(subDays(toDate(taskDate), 1));
         })
     }
 
@@ -442,13 +443,28 @@ projectList.updateTodayProject = () => {
         projectList[1].addTask(taskName, task.info, task.getDate(), task.priority)
       })
     })
+}
+
+projectList.updateWeekProject = () => {
+    projectList[2].tasksList = [];
+
+    projectList.forEach((project) => {
+      if (project.title === 'Today' || project.title === 'This week')
+        return
+
+      const weekTasks = project.getTasksThisWeek()
+      weekTasks.forEach((task) => {
+        const taskName = `${task.title} (${project.title})`
+        projectList[2].addTask(taskName, task.info, task.getDate(), task.priority)
+      })
+    })
   }
 
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
-projectList[0].addTask('Task', 'DETAILS', '2022-07-16', 'low');
-projectList[0].addTask('Task2', 'DETAILS', '2022-07-18', 'high');
+projectList[0].addTask('Task', 'DETAILS', '2022-07-17', 'low');
+projectList[0].addTask('Task2', 'DETAILS', '2022-07-17', 'high');
 projectList[0].addTask('Task3', 'DETAILS', '2022-07-16', 'medium');
 // projectList.updateTodayProject();
 
