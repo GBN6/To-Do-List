@@ -74,7 +74,6 @@ const UI = (() => {
                 if (projectName === projectList[i].title)
                 {
                     projectList.deleteProject(i);
-                    console.log(projectList);
                     clearUserProjects();
                     renderProjectList();
                     clearTaskContainer()      
@@ -215,7 +214,6 @@ const UI = (() => {
         }
 
         taskTitleErorr.textContent = '';
-        console.log(taskDate);
         projectList[i].addTask(taskTitle, taskInfo, taskDate, taskPriority);
         e.target.reset();
         hideAddTaskForm();
@@ -274,19 +272,48 @@ const UI = (() => {
 
             checkedButton.addEventListener('click', () => {
                 task.toggleCompleted();
-                console.log(projectList);
                 renderTasksList(projectName);
             });
             deleteTask.addEventListener('click', (e) => {
                 let taskDlt = document.querySelector(`div[data-index="${i}"]`)
                 tasksContainer.removeChild(taskDlt);
                 projectList[ind].deleteTask(i);
-                console.log(projectList);
+            })
+
+            taskInfoButton.addEventListener('click', () =>{
+                openDetailsModal(projectName, task.title, task.getDateFormatted(), task.priority, task.info);
             })
 
             return tasksContainer;
 
         });
+
+        function openDetailsModal(projectName, taskTitle, dueDate, priority, details) {
+            const modal = document.querySelector('.modal');
+            const modalCloseButton = document.querySelector('.modal-close');
+            const modalTitle = document.querySelector('.modal-title');
+            const modalProject = document.querySelector('.modal-pn');
+            const modalDate = document.querySelector('.modal-dd');
+            const modalPriority = document.querySelector('.modal-pr');
+            const modalDetails = document.querySelector('.modal-de');
+
+            modal.style.display = 'flex';
+            modalTitle.textContent = taskTitle;
+            modalProject.textContent = projectName;
+            modalDate.textContent = dueDate;
+            modalPriority.textContent = priority;
+            modalDetails.textContent = details;
+
+            modalCloseButton.onclick = () => {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none'
+                }
+            }
+        }
 
         function priorityCheck(container, value) {
             if (value === 'low')
@@ -311,7 +338,6 @@ const UI = (() => {
             {
                 container.classList.add('completed');
                 button.appendChild(completedIcon);
-                console.log(button);
             }
             else 
             {
@@ -322,23 +348,7 @@ const UI = (() => {
         }
     }
 
-    // function submitTaskForm(e) {
-    //     e.preventdefault();
-    //     const projectName = document.querySelector('.current-project').textContent;
-    //     const taskTitle = document.querySelector('.input-task-title').value;
-    //     const taskInfo = document.querySelector('.input-task-info').value;
-    //     const taskDate = document.querySelector('.input-task-date').value;
-    //     const taskPriority = document.querySelector('.input-task-priority').value;
-    //     let getCurrentProject = projectList.filter((project) => project.getTitle() === projectName);
-    //     e.reset();
-    //     getCurrentProject.addTask(taskTitle, taskInfo, taskDate, taskPriority);
-    //     hideAddTaskForm();
-    //     console.log(getCurrentProject);
-    // }
-
 })();
-
-
 
 
 class Project {
@@ -374,8 +384,7 @@ class Project {
     }
 
 }
-console.log(isToday(new Date()));
-console.log(toDate(new Date('2022-07-19')));
+
 
 class Tasks {
     constructor(title, info, dueDate, priority) {
@@ -437,7 +446,6 @@ projectList.updateTodayProject = () => {
         return;
 
       const todayTasks = project.getTasksToday();
-    //   console.log(project.tasksList);
       todayTasks.forEach((task) => {
         const taskName = `${task.title} (${project.title})`
         projectList[1].addTask(taskName, task.info, task.getDate(), task.priority)
@@ -460,40 +468,25 @@ projectList.updateWeekProject = () => {
     })
   }
 
+// if (localStorage.getItem('projects') === null) {
+//     projectList = []
+// } else {
+//     const projectsFromStorage = JSON.parse(localStorage.getItem('project'));
+//     projectList = projectsFromStorage;
+// }
+
+// function saveLocally() {
+//     localStorage.setItem('project', JSON.stringify(projectList));
+// }
+
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
-projectList[0].addTask('Task', 'DETAILS', '2022-07-17', 'low');
-projectList[0].addTask('Task2', 'DETAILS', '2022-07-17', 'high');
-projectList[0].addTask('Task3', 'DETAILS', '2022-07-16', 'medium');
+projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
+projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
+projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
 // projectList.updateTodayProject();
+// saveLocally();
 
 const test = new Project('New Project');
-
-
-
-//     addTask(title, info, dueDate, priority) { 
-//         this.tasksList.push(new Tasks(title, info, dueDate, priority));
-//     }
-// }
-
-// class Tasks {
-//     constructor(title, info, dueDate, priority) {
-//         this.title = title;
-//         this.info = info;
-//         this.dueDate = dueDate;
-//         this.priority = priority;
-//         this.completed = false;
-//     }
-
-//     toggleCompleted() {
-//         this.completed === false ? this.completed = true : this.completed = false;
-//     }
-
-//     editTask(key, value) {
-//         this[key] = value;
-//     }
-// }
-
-
-// export default Tasks;
+projectList.push(test);
