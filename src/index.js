@@ -96,6 +96,7 @@ const UI = (() => {
             deleteProject();
             return; 
         }
+        projectList.updateTodayProject();
         openProject(projectTitle, this);
         renderTasksList(projectTitle);
     }
@@ -213,12 +214,12 @@ const UI = (() => {
         }
 
         taskTitleErorr.textContent = '';
+        console.log(taskDate);
         projectList[i].addTask(taskTitle, taskInfo, taskDate, taskPriority);
         e.target.reset();
         hideAddTaskForm();
         renderTasksList(projectName);
-        closeAddTaskForm()
-        console.log(projectList);
+        closeAddTaskForm();
         }        
 
     function hideAddTaskForm() {
@@ -360,18 +361,20 @@ class Project {
     };
     getTasksToday() {
         return this.tasksList.filter((task) => {
-          const taskDate = new Date(task.getDateFormatted())
+          const taskDate = new Date(task.getDate())
           return isToday(toDate(taskDate))
         })
       }
     getTasksThisWeek() {
         return this.tasksList.filter((task) => {
-        const taskDate = new Date(task.getDateFormatted())
+        const taskDate = new Date(task.getDate())
         return isThisWeek(subDays(toDate(taskDate), 1))
         })
     }
 
 }
+console.log(isToday(new Date()));
+console.log(toDate(new Date('2022-07-19')));
 
 class Tasks {
     constructor(title, info, dueDate, priority) {
@@ -391,10 +394,10 @@ class Tasks {
     }
 
     getDateFormatted() {
-        const day = this.dueDate.split('-')[0]
+        const year = this.dueDate.split('-')[0]
         const month = this.dueDate.split('-')[1]
-        const year = this.dueDate.split('-')[2]
-        return `${year}/${month}/${day}`;
+        const day = this.dueDate.split('-')[2]
+        return `${day}/${month}/${year}`;
     }
     getDate() {
         return this.dueDate
@@ -426,16 +429,17 @@ projectList.index = (projectName) => {
     }
 }
 projectList.updateTodayProject = () => {
-    projectList[1].tasks = [];
+    projectList[1].tasksList = [];
 
     projectList.forEach((project) => {
       if (project.title === 'Today' || project.title === 'This week')
         return;
 
       const todayTasks = project.getTasksToday();
+    //   console.log(project.tasksList);
       todayTasks.forEach((task) => {
         const taskName = `${task.title} (${project.title})`
-        projectList[1].addTask(taskName, task.info, task.getDate(), task.priority);
+        projectList[1].addTask(taskName, task.info, task.getDate(), task.priority)
       })
     })
   }
@@ -443,15 +447,12 @@ projectList.updateTodayProject = () => {
 projectList.addProject('Your Tasks');
 projectList.addProject('Today');
 projectList.addProject('This week');
-projectList[0].addTask('Task', 'DETAILS', '15-07-2022', 'low');
-projectList[0].addTask('Task2', 'DETAILS', '15-07-2022', 'high');
-projectList[0].addTask('Task3', 'DETAILS', '15-07-2022', 'medium');
-console.log(projectList);
-projectList.updateTodayProject();
+projectList[0].addTask('Task', 'DETAILS', '2022-07-16', 'low');
+projectList[0].addTask('Task2', 'DETAILS', '2022-07-18', 'high');
+projectList[0].addTask('Task3', 'DETAILS', '2022-07-16', 'medium');
+// projectList.updateTodayProject();
 
 const test = new Project('New Project');
-
-console.log(test.getTitle());
 
 
 
