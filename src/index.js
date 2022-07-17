@@ -361,15 +361,18 @@ const UI = (() => {
 })();
 
 window.addEventListener('DOMContentLoaded', UI.renderProjectList);
-// projectList.addProject('Your Tasks');
-// projectList.addProject('Today');
-// projectList.addProject('This week');
-// projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
-// projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
-// projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
-// let todayDate = new Date().toISOString().slice(0, 10);
-// const test = new Project('Project Example');
-// projectList.push(test);
-// test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low');
+if (!projectList.length) {
+    projectList.addProject('Your Tasks');
+    projectList.addProject('Today');
+    projectList.addProject('This week');
+    projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
+    projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
+    projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
+    let todayDate = new Date().toISOString().slice(0, 10);
+    const test = new Project('Project Example');
+    projectList.push(test);
+    test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low');
+}
+
 downloadLocally();
 console.log(projectList);
