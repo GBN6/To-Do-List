@@ -359,8 +359,8 @@ const UI = (() => {
     }
     return {renderProjectList};
 })();
-
 window.addEventListener('DOMContentLoaded', UI.renderProjectList);
+downloadLocally();
 if (projectList.length === 0) {
     projectList.addProject('Your Tasks');
     projectList.addProject('Today');
@@ -373,6 +373,4 @@ if (projectList.length === 0) {
     projectList.push(test);
     test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low');
 }
-console.log(!projectList.length);
-downloadLocally();
 console.log(projectList);
