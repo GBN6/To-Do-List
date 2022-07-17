@@ -4,7 +4,7 @@ Project to create **To Do list** app using Vanilla JS, CSS and HTML
 
 
 
-🔗 **Live preview:** [here](https://gbn6.github.io//To-Do-List/)
+🔗 **Live preview:** [here](https://gbn6.github.io/To-Do-List/)
 
 ## Built with
 
