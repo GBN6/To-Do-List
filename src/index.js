@@ -1,6 +1,7 @@
 import Project from "./project";
 import Tasks from "./task";
 import projectList from "./projectList";
+import {saveLocally, downloadLocally} from './storage';
 
 //     DOM
 
@@ -9,10 +10,15 @@ const UI = (() => {
     const createNewProjectButton = document.querySelector('.btn-project-user');
     const addNewTask = document.querySelector('.add-task');
     const cancelAddTaskForm = document.querySelector('.input-task-cancel-btn');
+    const openNav = document.querySelector('.btn-nav-open')
 
     createNewProjectButton.addEventListener('click', displayProjectInput);
     addNewTask.addEventListener('submit', addNewTaskToList);
     cancelAddTaskForm.addEventListener('click', closeAddTaskForm)
+    openNav.addEventListener('click', () => {
+        const nav = document.querySelector('.nav')
+        nav.classList.toggle('active');
+    })
     
 
     function displayProjectInput() {
@@ -58,14 +64,12 @@ const UI = (() => {
     }
 
     function renderProjectList() {
-        console.log('renderProjectList')
         projectList.forEach(project => {
                 if (
                     project.title !== 'Your Tasks' &&
                     project.title !== 'Today' && 
                     project.title !== 'This week' 
                 ) {
-                    console.log(project);
                     renderProjectsNav(project.title);
                 }
             })
@@ -357,25 +361,15 @@ const UI = (() => {
 })();
 
 window.addEventListener('DOMContentLoaded', UI.renderProjectList);
-// if (localStorage.getItem('projects') === null) {
-//     projectList = []
-// } else {
-//     const projectsFromStorage = JSON.parse(localStorage.getItem('project'));
-//     projectList = projectsFromStorage;
-// }
-
-// function saveLocally() {
-//     localStorage.setItem('project', JSON.stringify(projectList));
-// }
-
-projectList.addProject('Your Tasks');
-projectList.addProject('Today');
-projectList.addProject('This week');
-projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
-projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
-projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
-
-let todayDate = new Date().toISOString().slice(0, 10);
-const test = new Project('Project Example');
-projectList.push(test);
-test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low')
+// projectList.addProject('Your Tasks');
+// projectList.addProject('Today');
+// projectList.addProject('This week');
+// projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
+// projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
+// projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
+// let todayDate = new Date().toISOString().slice(0, 10);
+// const test = new Project('Project Example');
+// projectList.push(test);
+// test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low');
+downloadLocally();
+console.log(projectList);

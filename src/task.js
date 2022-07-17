@@ -1,3 +1,5 @@
+import {saveLocally} from './storage';
+
 class Tasks {
     constructor(title, info, dueDate, priority) {
         this.title = title;
@@ -9,6 +11,7 @@ class Tasks {
     
     toggleCompleted() {
         this.completed === false ? this.completed = true : this.completed = false;
+        saveLocally();
     }
     
     editTask(key, value) {

@@ -52,6 +52,10 @@ body {
     font-size: 40px;
 }
 
+.btn-nav-open {
+    display: none;
+}
+
 
 /*       MAIN        */
 .main {
@@ -59,11 +63,14 @@ body {
     min-height: calc(100vh - 104px - 48px);
 }
 
-.main .nav {
+.nav {
     width: 300px;
     min-width: 250px;
     padding: 20px;
     background-color: var(--color-dark);
+}
+.nav.active {
+    display: block;
 }
 
 .main .btn-project-default, .btn-project-user, .btn-add-task{
@@ -216,6 +223,7 @@ body {
 .task .btn-task-info {
     border: 2px solid var(--color-yellow);
     margin-right: 10px;
+    font-size: min(3vw, 1rem);
 }
 
 .task .btn-task-delete {
@@ -376,4 +384,25 @@ footer {
 
 .modal-details{
     display: flex;
+}
+
+
+/*         MEDIA QUERIES          */
+@media (max-width: 650px) {
+.btn-nav-open {
+    display: block;
+}
+  
+.main {
+    flex-direction: column;
+    }
+  
+.nav {
+    width: 100%;
+    display: none;
+}
+  
+.tasks-container {
+    width: 100%;
+}
 }

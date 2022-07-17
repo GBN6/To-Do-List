@@ -1,18 +1,21 @@
 import Project from './project'
 import Tasks from './task';
+import {saveLocally} from './storage';
 
 let projectList = [];
 
 projectList.addProject = (title) => {
     projectList.push(new Project(title));
+    saveLocally();
 };
 
 projectList.deleteProject = (position) => {
     projectList.splice(position, 1);
+    saveLocally();
 };
 
 projectList.contains = (projectName) => {
-    return projectList.some((project) => project.title === projectName)
+    return projectList.some((project) => project.title === projectName);
 }
 
 projectList.index = (projectName) => {

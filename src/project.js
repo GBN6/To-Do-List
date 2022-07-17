@@ -1,5 +1,6 @@
 import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
 import Tasks from './task';
+import {saveLocally} from './storage';
 
 
 class Project {
@@ -10,17 +11,22 @@ class Project {
 
     addTask(title, description, dueDate, priority) {
         this.tasksList.push(new Tasks(title, description, dueDate, priority));
+        saveLocally();
     }
 
     getTitle() {
         return this.title;
     }
+    
     contains(taskName) {
         return this.tasksList.some((task) => task.title === taskName)
     }
+
     deleteTask(index) {
         this.tasksList.splice(index, 1);
+        saveLocally();
     };
+
     getTasksToday() {
         return this.tasksList.filter((task) => {
           const taskDate = new Date(task.getDate())
