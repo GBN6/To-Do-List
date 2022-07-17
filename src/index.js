@@ -1,4 +1,7 @@
-import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
+import Project from "./project";
+import Tasks from "./task";
+import projectList from "./projectList";
+
 //     DOM
 
 const UI = (() => {
@@ -6,6 +9,7 @@ const UI = (() => {
     const createNewProjectButton = document.querySelector('.btn-project-user');
     const addNewTask = document.querySelector('.add-task');
     const cancelAddTaskForm = document.querySelector('.input-task-cancel-btn');
+
     createNewProjectButton.addEventListener('click', displayProjectInput);
     addNewTask.addEventListener('submit', addNewTaskToList);
     cancelAddTaskForm.addEventListener('click', closeAddTaskForm)
@@ -54,12 +58,14 @@ const UI = (() => {
     }
 
     function renderProjectList() {
+        console.log('renderProjectList')
         projectList.forEach(project => {
                 if (
                     project.title !== 'Your Tasks' &&
                     project.title !== 'Today' && 
                     project.title !== 'This week' 
                 ) {
+                    console.log(project);
                     renderProjectsNav(project.title);
                 }
             })
@@ -347,127 +353,10 @@ const UI = (() => {
             return container;
         }
     }
-
+    return {renderProjectList};
 })();
 
-
-class Project {
-    constructor(title){
-        this.title = title;
-        this.tasksList = [];
-    }
-
-    addTask(title, description, dueDate, priority) {
-        this.tasksList.push(new Tasks(title, description, dueDate, priority));
-    }
-
-    getTitle() {
-        return this.title;
-    }
-    contains(taskName) {
-        return this.tasksList.some((task) => task.title === taskName)
-    }
-    deleteTask(index) {
-        this.tasksList.splice(index, 1);
-    };
-    getTasksToday() {
-        return this.tasksList.filter((task) => {
-          const taskDate = new Date(task.getDate())
-          return isToday(toDate(taskDate))
-        })
-      }
-    getTasksThisWeek() {
-        return this.tasksList.filter((task) => {
-        const taskDate = new Date(task.getDate())
-        return isThisWeek(subDays(toDate(taskDate), 1));
-        })
-    }
-
-}
-
-
-class Tasks {
-    constructor(title, info, dueDate, priority) {
-        this.title = title;
-        this.info = info;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.completed = false;
-    }
-    
-    toggleCompleted() {
-        this.completed === false ? this.completed = true : this.completed = false;
-    }
-    
-    editTask(key, value) {
-        this[key] = value;
-    }
-
-    getDateFormatted() {
-        const year = this.dueDate.split('-')[0]
-        const month = this.dueDate.split('-')[1]
-        const day = this.dueDate.split('-')[2]
-        return `${day}/${month}/${year}`;
-    }
-    getDate() {
-        return this.dueDate
-      }
-}
-
-
-
-let projectList = [];
-projectList.addProject = (title) => {
-    projectList.push(new Project(title));
-};
-
-projectList.deleteProject = (position) => {
-    projectList.splice(position, 1);
-};
-
-projectList.contains = (projectName) => {
-    return projectList.some((project) => project.title === projectName)
-}
-
-projectList.index = (projectName) => {
-    for (let i = 0; i < projectList.length; i++)
-    {
-        if (projectName === projectList[i].getTitle())
-        {
-            return i;
-        }
-    }
-}
-projectList.updateTodayProject = () => {
-    projectList[1].tasksList = [];
-
-    projectList.forEach((project) => {
-      if (project.title === 'Today' || project.title === 'This week')
-        return;
-
-      const todayTasks = project.getTasksToday();
-      todayTasks.forEach((task) => {
-        const taskName = `${task.title} (${project.title})`
-        projectList[1].addTask(taskName, task.info, task.getDate(), task.priority)
-      })
-    })
-}
-
-projectList.updateWeekProject = () => {
-    projectList[2].tasksList = [];
-
-    projectList.forEach((project) => {
-      if (project.title === 'Today' || project.title === 'This week')
-        return
-
-      const weekTasks = project.getTasksThisWeek()
-      weekTasks.forEach((task) => {
-        const taskName = `${task.title} (${project.title})`
-        projectList[2].addTask(taskName, task.info, task.getDate(), task.priority)
-      })
-    })
-  }
-
+window.addEventListener('DOMContentLoaded', UI.renderProjectList);
 // if (localStorage.getItem('projects') === null) {
 //     projectList = []
 // } else {
@@ -485,8 +374,8 @@ projectList.addProject('This week');
 projectList[0].addTask('Learn HTML', 'I should practice HTML', '2022-07-17', 'low');
 projectList[0].addTask('Learn CSS', 'I should practice CSS', '2022-07-17', 'high');
 projectList[0].addTask('Learn JS', 'I should practice JS', '2022-07-16', 'medium');
-// projectList.updateTodayProject();
-// saveLocally();
 
-const test = new Project('New Project');
+let todayDate = new Date().toISOString().slice(0, 10);
+const test = new Project('Project Example');
 projectList.push(test);
+test.addTask('Check GBN GitHub', 'I should checkout this guy github, maybe he has more interesting projects', todayDate, 'low')

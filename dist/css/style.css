@@ -109,7 +109,7 @@ body {
     margin-bottom: 5px;
     cursor: pointer;
 }
-.btn-project-default:hover, .btn-project:hover {
+.btn-project-default:hover, .btn-project:hover, .btn-project-user:hover {
     background-color: var(--color-grey);
 }
 .btn-choose-project.active {
