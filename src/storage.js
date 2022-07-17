@@ -19,7 +19,6 @@ function saveLocally() {
   
 function downloadLocally() {
     let downloadedList = getLocalObject('projectList');
-    console.log(downloadedList.length);
     if (downloadedList === null || !downloadedList.length) return;
     for (let i = 0; i < downloadedList.length; i++) { //JSON can't store functions, so each project/to-do is added again as a new objects to return their lost methods.
       projectList.push(new Project(downloadedList[i].title));

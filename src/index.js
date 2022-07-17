@@ -362,7 +362,7 @@ const UI = (() => {
 window.addEventListener('DOMContentLoaded', UI.renderProjectList);
 downloadLocally();
 console.log(projectList.length);
-if (projectList.length === 0) {
+if (!projectList.length) {
     projectList.addProject('Your Tasks');
     projectList.addProject('Today');
     projectList.addProject('This week');
