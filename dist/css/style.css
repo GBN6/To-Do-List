@@ -203,7 +203,7 @@ body {
     justify-content: space-between;
     border-radius: 5px;
     padding: 10px;
-    font-size: 1.2rem;
+    font-size: min(5vw, 1.2rem);
     margin-bottom: 10px;
     font-weight: 600;
 }
@@ -243,6 +243,7 @@ body {
 /*         TASKS FORM           */
 .add-task-form {
     display: none;
+    margin-bottom: 10px;
 }
 .add-task-form.active {
     display: block;
@@ -269,10 +270,14 @@ body {
     border: var(--color-white);
     padding: 5px;
     border-radius: 5px;
+    width: 100%;
 }
 
 .input-task-buttons {
     display: flex;
+}
+.input-task-priority {
+    width: auto;
 }
 
 .input-task-priority {
@@ -403,6 +408,18 @@ footer {
 }
   
 .tasks-container {
+    width: 100%;
+    padding: 5px 10px;
+
+}
+.input-task-buttons {
+    flex-direction: column;
+    gap: 10px;
+}
+.input-task-submit-btn {
+    margin: 0;
+}
+.input-task-priority {
     width: 100%;
 }
 }
